@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  client:
+    build: ./client
+    ports:
+      - 8080:8080
+    volumes:
+      - ./client:/data
+      
+  server:
+    build: ./server
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server:/data
+    depends_on: 
+      - database
+    environment:
+      - DATABASE_URL=database:27017
+    
+  database:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./database:/data/db
