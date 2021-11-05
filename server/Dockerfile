@@ -1,13 +1,6 @@
-FROM node:lts-gallium
-
-COPY ./docker/entrypoint.sh /entrypoint/
-
-RUN ["chmod", "+x", "entrypoint/entrypoint.sh"]
-
-WORKDIR /data/
-
+FROM node:gallium-alpine
+COPY package.json ./
+RUN npm install
+COPY ./ .
 EXPOSE 3000
-
-ENTRYPOINT ["/entrypoint/entrypoint.sh"]
-
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]

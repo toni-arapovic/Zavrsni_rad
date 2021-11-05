@@ -1,13 +1,12 @@
-FROM node:lts-gallium
+FROM node:gallium-alpine as build-stage
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-COPY ./docker/entrypoint.sh /entrypoint/
 
-RUN ["chmod", "+x", "entrypoint/entrypoint.sh"]
-
-WORKDIR /data/
-
-EXPOSE 8080
-
-ENTRYPOINT ["/entrypoint/entrypoint.sh"]
-
-CMD ["npm", "run", "serve"]
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
