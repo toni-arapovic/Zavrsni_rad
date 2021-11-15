@@ -39,6 +39,11 @@ export default {
         state.qty -= prodData.qty;
         state.total -= prodData.price * prodData.qty;
       },
+      clearProductsFromCart(state){
+        state.items = [],
+        state.total = 0,
+        state.qty = 0
+      }
     },
     actions: {
       addToCart(context, payload) {
@@ -49,6 +54,9 @@ export default {
       },
       removeFromCart(context, payload) {
         context.commit('removeProductFromCart', payload);
+      },
+      clearCart(context){
+        context.commit('clearProductsFromCart')
       }
     },
     getters: {
