@@ -34,8 +34,9 @@
       </ul>
       <ul class="navbar-nav me-left">
         <li class="nav-item">
-          <router-link class="nav-link" to="/kosarica">🛒</router-link>
+          <router-link class="nav-link" to="/kosarica">🛒<div class="circle-number">{{ cartQuantity }}</div></router-link>
         </li>
+
       </ul>
       <form v-on:submit.prevent class="d-flex">
         <input v-model="searchValue" class="form-control me-2" type="text" placeholder="Traži">
@@ -57,6 +58,25 @@ export default {
     setSearchValue(){
       this.$store.dispatch("search/search", this.searchValue)
     }
+  },
+  computed:{
+    cartQuantity(){
+      return this.$store.getters['cart/quantity'];
+    }
   }
 }
 </script>
+
+<style scoped>
+  .circle-number {
+    background: red;
+    border-radius: 0.8em;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.2em;
+    margin-right: 5px;
+    text-align: center;
+    width: 1.2em; 
+  }
+</style>

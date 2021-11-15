@@ -1,6 +1,9 @@
 <template>
   <li class="card">
     <div div class="card-body">
+      <div v-if="isSuccessful" class="alert alert-success" role="alert">
+      Proizvod dodan u košaricu
+      </div>
       <div>
         <img class="card-img" :src="image" :alt="title"/>
       </div>
@@ -19,11 +22,18 @@
 <script>
 export default {
   props: ['id', 'image', 'title', 'price', 'description'],
+  data(){
+    return{
+      isSuccessful: false
+    }
+  },
   methods: {
     addToCart() {
       this.$store.dispatch('cart/addToCart', {
         id: this.id,
       });
+      this.isSuccessful = true;
+      setTimeout(() => this.isSuccessful = false, 2000);
     },
   },
 };
