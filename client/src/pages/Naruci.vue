@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="">
     <div v-if="isSuccessful" class="alert alert-success" role="alert">
       Narudžba uspješna!
     </div>
@@ -106,3 +106,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+section{
+  margin: 1rem auto 1rem auto;
+  width: 60%;
+}
+</style>
