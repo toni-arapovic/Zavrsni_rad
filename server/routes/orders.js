@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
     const order = new Order({
         products: JSON.stringify( req.body.products),
         name: req.body.name,
+        email: req.body.email,
         adress: req.body.adress,
         city: req.body.city,
         postalCode: req.body.postalCode,

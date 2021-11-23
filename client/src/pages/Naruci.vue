@@ -88,6 +88,7 @@ export default {
         .post("http://localhost:3000/orders", {
           products: products,
           name: this.name,
+          email: this.email,
           adress: this.adress,
           city: this.city,
           postalCode: this.postalCode,

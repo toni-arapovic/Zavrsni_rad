@@ -1,3 +1,4 @@
+import axios from 'axios'
 export default {
     namespaced: true,
     state() {
@@ -46,10 +47,12 @@ export default {
       }
     },
     actions: {
-      addToCart(context, payload) {
+      async addToCart(context, payload) {
         const prodId = payload.id;
-        const products = context.rootGetters['prods/products'];
-        const product = products.find(prod => prod._id === prodId);
+        // const products = context.rootGetters['prods/products'];
+        // const product = products.find(prod => prod._id === prodId);
+        const response = await axios.get('http://localhost:3000/products/'+prodId)
+        const product = response.data
         context.commit('addProductToCart', product);
       },
       removeFromCart(context, payload) {

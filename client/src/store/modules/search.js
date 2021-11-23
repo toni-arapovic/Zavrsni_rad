@@ -1,3 +1,4 @@
+import axios from 'axios'
 export default {
     namespaced: true,
     state() {
@@ -15,10 +16,13 @@ export default {
         }
     },
     actions: {
-        search(context, payload){
+        async search(context, payload){
           context.commit('setSearchValue', payload);
           var searchResults = {}
-          const products = context.rootGetters['prods/products'];
+          // const products = context.rootGetters['prods/products'];
+          const response = await axios.get('http://localhost:3000/products/all')
+          const products = response.data
+
           searchResults = products.filter(product => {
             var title = product.title.toLowerCase().search(payload.toLowerCase())
             var description = product.description.toLowerCase().search(payload.toLowerCase())

@@ -1,7 +1,7 @@
 <template>
   <the-header></the-header>
   <main>
-    <router-view></router-view>
+    <router-view :key="$route.path"></router-view>
   </main>
 </template>
 
@@ -12,8 +12,8 @@ export default {
   components: {
     TheHeader,
   },
-  created(){
-    this.$store.dispatch('prods/getProducts')
-  }
+  // created(){
+  //   this.$store.dispatch('prods/getProducts')
+  // }
 };
 </script>

@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-         <router-link class="nav-link" to="/processori">Processori</router-link>
+         <router-link class="nav-link" to="/processor">Processori</router-link>
         </li>
         <li class="nav-item">
-         <router-link class="nav-link" to="/maticneploce">Maticne ploce</router-link>
+         <router-link class="nav-link" to="/maticnaploca">Maticne ploce</router-link>
         </li>
         <li class="nav-item">
          <router-link class="nav-link" to="/ram">Ram</router-link>
@@ -20,16 +20,16 @@
          <router-link class="nav-link" to="/pohranapodataka">HDD i SSD</router-link>
         </li>
         <li class="nav-item">
-         <router-link class="nav-link" to="/grafickekartice">Graficke kartice</router-link>
+         <router-link class="nav-link" to="/grafickakartica">Graficke kartice</router-link>
         </li>
         <li class="nav-item">
-         <router-link class="nav-link" to="/kucista">Kucista</router-link>
+         <router-link class="nav-link" to="/kuciste">Kucista</router-link>
         </li>
         <li class="nav-item">
-         <router-link class="nav-link" to="/napojnejedinice">Napojne jedinice</router-link>
+         <router-link class="nav-link" to="/napojnajedinica">Napojne jedinice</router-link>
         </li>
         <li class="nav-item">
-         <router-link class="nav-link" to="/ventilatorikuleri">Ventilatori i kuleri</router-link>
+         <router-link class="nav-link" to="/ventilatorkuler">Ventilatori i kuleri</router-link>
         </li>
       </ul>
       <ul class="navbar-nav me-left">

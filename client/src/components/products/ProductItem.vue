@@ -4,12 +4,13 @@
       <div v-if="isSuccessful" class="alert alert-success" role="alert">
       Proizvod dodan u košaricu
       </div>
+      <router-link :to="'/proizvod/'+this.id">
       <div>
         <img class="card-img" :src="image" :alt="title"/>
       </div>
+      </router-link>
       <div>
         <h4 class="card-title">{{ title }}</h4>
-        <p class="card-text">{{ description }}</p>
       </div>
       <div class="buy d-flex justify-content-between align-items-center">
       <h5  class="price text-success">{{ price }}KM</h5>
@@ -24,7 +25,8 @@ export default {
   props: ['id', 'image', 'title', 'price', 'description'],
   data(){
     return{
-      isSuccessful: false
+      isSuccessful: false,
+      path: ""
     }
   },
   methods: {
