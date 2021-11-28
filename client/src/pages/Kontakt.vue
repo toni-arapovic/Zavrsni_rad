@@ -1,7 +1,7 @@
 <template>
 <section>
     <div v-if="isSuccessful" class="alert alert-success" role="alert">
-      Narudžba uspješna!
+      Pitanje poslano
     </div>
     <div v-if="errors.length" class="alert alert-danger" role="alert">
       <ul>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -60,7 +61,20 @@ export default {
       }
     },
     sendQuestion(){
-        // dodati api za slanje emaila administratoru
+        axios
+        .post("http://localhost:3000/questions", {
+          name: this.name,
+          email: this.email,
+          question: this.question,
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+        this.isSuccessful = true;
+        setTimeout(() => (this.isSuccessful = false), 2000);
     }
   },
 };

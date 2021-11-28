@@ -101,6 +101,7 @@ export default {
           console.log(error);
         });
         this.isSuccessful = true;
+        setTimeout(() => (this.isSuccessful = false), 2000);
         this.$store.dispatch("cart/clearCart")
     },
   },
