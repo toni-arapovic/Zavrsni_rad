@@ -24,6 +24,10 @@ const productsRouter = require('./routes/products')
 app.use('/products', productsRouter)
 const ordersRouter = require('./routes/orders')
 app.use('/orders', ordersRouter)
+const questionsRouter = require('./routes/questions')
+app.use('/questions', questionsRouter)
+
+
 
 
 
