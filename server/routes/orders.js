@@ -1,7 +1,9 @@
-const { request } = require("express");
+require('dotenv').config()
 const express = require("express");
 const router = express.Router();
 const Order = require('../models/orders')
+const client = require('@sendgrid/mail')
+client.setApiKey(process.env.SENDGRID_API_KEY)
 
 
 router.get("/", async (req, res) => {
@@ -15,10 +17,8 @@ router.get("/", async (req, res) => {
 
 
 router.post("/", async (req, res) => {
-    //console.log(typeof JSON.stringify( req.body.products))
-    //console.log(typeof req.body.products)
     const order = new Order({
-        products: JSON.stringify( req.body.products),
+        products: JSON.stringify(req.body.products),
         name: req.body.name,
         email: req.body.email,
         adress: req.body.adress,
@@ -26,7 +26,33 @@ router.post("/", async (req, res) => {
         postalCode: req.body.postalCode,
         phoneNumber: req.body.phoneNumber
     })
+
+    var templateData = []
+    for(product in req.body.products){
+        templateData.push(req.body.products[product].title+", ")
+    }
+
     
+    const msg = {
+        to: req.body.email,
+        from: 'webshop@zavrsnirad.xyz',
+        subject: 'Potvrda narudžbe',
+        templateId: 'd-b13b51739fc24aab99dad0be9ad8896a',
+        dynamicTemplateData: {
+            name: req.body.name,
+            items: templateData,
+        }
+      }
+    
+    client
+        .send(msg)
+        .then(() => {
+            console.log('Email sent')
+        })
+        .catch((error) => {
+            console.error(error)
+    })
+
     try{
         const newOrder = await order.save()
         res.status(201).json(newOrder)
