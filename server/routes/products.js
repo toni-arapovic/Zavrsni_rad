@@ -28,6 +28,7 @@ router.post("/", async (req, res) => {
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
+    popular: req.body.popular
   });
 
   try {
@@ -65,19 +66,31 @@ async function getProduct(req, res, next) {
 function paginatedResults(model) {
   return async (req, res, next) => {
     const type = req.query.type;
+    const sort = req.query.sort;
     const page = parseInt(req.query.page)
     const limit = parseInt(req.query.limit)
+    var argument = {}
+    var sortType = {dateAdded: 'asc'}
 
     const startIndex = (page - 1) * limit
-    const endIndex = page * limit
 
     const results = {}
 
-    const maxPages = await model.countDocuments({type: type}).exec() / limit
+    if(type != undefined){
+      argument = {type: type}
+    }
+    if(sort == "popular"){
+      argument = {popular: true}
+    }
+    if(sort == "latest"){
+      sortType = {dateAdded: 'desc'}
+    }
+
+    const maxPages = await model.countDocuments(argument).exec() / limit
     results.maxPages = Math.ceil(maxPages)
     
     try {
-      results.results = await model.find({type: type}).limit(limit).skip(startIndex).exec()
+      results.results = await model.find(argument).sort(sortType).limit(limit).skip(startIndex).exec()
       res.paginatedResults = results
       next()
     } catch (err) {

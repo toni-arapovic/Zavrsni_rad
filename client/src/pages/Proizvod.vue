@@ -1,17 +1,17 @@
 <template>
-  <div v-for="prod in products" :key="prod._id">
+  <div >
     <div v-if="isSuccessful" class="alert alert-success" role="alert">
       Proizvod dodan u košaricu
     </div>
     <div>
-      <img :src="prod.image" :alt="prod.title" />
+      <img :src="products.image" :alt="products.title" />
     </div>
     <div>
-      <h4>{{ prod.title }}</h4>
-      <p>{{ prod.description }}</p>
+      <h4>{{ products.title }}</h4>
+      <p>{{ products.description }}</p>
     </div>
     <div>
-      <h5>{{ prod.price }}KM</h5>
+      <h5>{{ products.price }}KM</h5>
       <button @click="addToCart" class="btn btn-primary">
         Dodaj u kosaricu
       </button>
@@ -38,7 +38,7 @@ export default {
     },
     async loadData(){
     const response = await axios.get('http://localhost:3000/products/'+this.$route.params.prId)
-    this.products = response;
+    this.products = response.data;
     console.log(this.products)
     }
   },

@@ -9,9 +9,6 @@
               88000 Mostar
             </li>
             <li class="mb-3">
-              info@zavrsnirad.xyz
-            </li>
-            <li class="mb-3">
               +387 63 123 456
             </li>
             <li>

@@ -25,6 +25,10 @@ const productSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    popular:{
+        type: Boolean,
+        required: true
     }
 })
 
