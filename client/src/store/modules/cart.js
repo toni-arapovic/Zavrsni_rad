@@ -22,6 +22,7 @@ export default {
             productId: productData._id,
             title: productData.title,
             image: productData.image,
+            description: productData.description,
             price: productData.price,
             qty: 1,
           };
@@ -44,6 +45,26 @@ export default {
         state.items = [],
         state.total = 0,
         state.qty = 0
+      },
+      increaseQuantity(state, payload){
+        const prodId = payload.productId;
+        const productInCartIndex = state.items.findIndex(
+          (cartItem) => cartItem.productId === prodId
+        );
+        const prodData = state.items[productInCartIndex]
+        state.items[productInCartIndex].qty++
+        state.qty++
+        state.total += prodData.price
+      },
+      decreaseQuantity(state, payload){
+        const prodId = payload.productId;
+        const productInCartIndex = state.items.findIndex(
+          (cartItem) => cartItem.productId === prodId
+        );
+        const prodData = state.items[productInCartIndex]
+        state.items[productInCartIndex].qty--
+        state.qty--
+        state.total -= prodData.price
       }
     },
     actions: {
@@ -60,6 +81,12 @@ export default {
       },
       clearCart(context){
         context.commit('clearProductsFromCart')
+      },
+      increase(context, payload){
+        context.commit('increaseQuantity', payload)
+      },
+      decrease(context, payload){
+        context.commit('decreaseQuantity', payload)
       }
     },
     getters: {
