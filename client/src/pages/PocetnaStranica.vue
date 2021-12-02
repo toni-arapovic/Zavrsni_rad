@@ -121,10 +121,10 @@ export default {
   methods: {
     async loadData() {
       const responsePopular = await axios.get(
-        "http://api.zavrsnirad.xyz/products?sort=popular&page=1&limit="+this.limit
+        "https://api.zavrsnirad.xyz/products?sort=popular&page=1&limit="+this.limit
       );
       const responseLatest = await axios.get(
-        "http://api.zavrsnirad.xyz/products?sort=latest&page=1&limit="+this.limit
+        "https://api.zavrsnirad.xyz/products?sort=latest&page=1&limit="+this.limit
       );
       this.productsPopular = responsePopular.data.results;
       this.productsLatest = responseLatest.data.results;
@@ -135,41 +135,41 @@ export default {
     async nextPopular(){
       this.currentPagePopular++
       const response = await axios.get(
-        "http://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
+        "https://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
       );
       this.productsPopular = response.data.results;
     },
     async nextLatest(){
       this.currentPageLatest++
       const response = await axios.get(
-        "http://api.zavrsnirad.xyz/products?sort=latest&page="+ this.currentPageLatest +"&limit="+ this.limit
+        "https://api.zavrsnirad.xyz/products?sort=latest&page="+ this.currentPageLatest +"&limit="+ this.limit
       );
       this.productsLatest = response.data.results;
     },
     async previousPopular(){
       this.currentPagePopular--
        const response = await axios.get(
-        "http://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
+        "https://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
       );
       this.productsPopular = response.data.results;
     },
     async previousLatest(){
       this.currentPageLatest--
        const response = await axios.get(
-        "http://api.zavrsnirad.xyz/products?sort=latest&page="+ this.currentPageLatest +"&limit="+ this.limit
+        "https://api.zavrsnirad.xyz/products?sort=latest&page="+ this.currentPageLatest +"&limit="+ this.limit
       );
       this.productsLatest = response.data.results;
     },
     async pageByNumberPopular(number){
       const response = await axios.get(
-        "http://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page="+ number +"&limit="+ this.limit
+        "https://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page="+ number +"&limit="+ this.limit
       );
       this.productsPopular = response.data.results;
       this.currentPagePopular = number
     },
     async pageByNumberLatest(number){
       const response = await axios.get(
-        "http://api.zavrsnirad.xyz/products?sort=latest&page="+ number +"&limit="+ this.limit
+        "https://api.zavrsnirad.xyz/products?sort=latest&page="+ number +"&limit="+ this.limit
       );
       this.productsLatest = response.data.results;
       this.currentPageLatest = number
@@ -182,7 +182,7 @@ export default {
       }
       this.currentPagePopular = 1
       const responsePopular = await axios.get(
-        "http://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page=1&limit="+this.limit
+        "https://api.zavrsnirad.xyz/products?"+this.type+"&sort=popular&page=1&limit="+this.limit
       );
       this.productsPopular = responsePopular.data.results
       this.maxPagesPopular = responsePopular.data.maxPages;

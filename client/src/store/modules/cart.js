@@ -72,7 +72,7 @@ export default {
         const prodId = payload.id;
         // const products = context.rootGetters['prods/products'];
         // const product = products.find(prod => prod._id === prodId);
-        const response = await axios.get('http://api.zavrsnirad.xyz/products/'+prodId)
+        const response = await axios.get('https://api.zavrsnirad.xyz/products/'+prodId)
         const product = response.data
         context.commit('addProductToCart', product);
       },

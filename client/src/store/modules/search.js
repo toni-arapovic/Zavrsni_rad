@@ -20,7 +20,7 @@ export default {
           context.commit('setSearchValue', payload);
           var searchResults = {}
           // const products = context.rootGetters['prods/products'];
-          const response = await axios.get('http://api.zavrsnirad.xyz/products/all')
+          const response = await axios.get('https://api.zavrsnirad.xyz/products/all')
           const products = response.data
 
           searchResults = products.filter(product => {

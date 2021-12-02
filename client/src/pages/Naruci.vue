@@ -85,7 +85,7 @@ export default {
     completeOrder() {
       var products = this.$store.getters["cart/products"]
       axios
-        .post("http://api.zavrsnirad.xyz/orders", {
+        .post("https://api.zavrsnirad.xyz/orders", {
           products: products,
           name: this.name,
           email: this.email,
