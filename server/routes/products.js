@@ -76,10 +76,11 @@ function paginatedResults(model) {
 
     const results = {}
 
-    if(type != undefined){
+    if(type != undefined && sort == "popular"){
+      argument = {type: type, popular: true}
+    }else if(type != undefined && sort == undefined){
       argument = {type: type}
-    }
-    if(sort == "popular"){
+    }else if(type == undefined && sort == "popular"){
       argument = {popular: true}
     }
     if(sort == "latest"){

@@ -3,7 +3,47 @@
   </section>
   <section class="conatiner">
     <h1>Popularni proizvodi</h1>
-        <ul class="row">
+    <div>
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#popularNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="popularNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('')">Svi proizvodi</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('processor')">Processori</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('maticnaploca')">Maticne ploce</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('ram')">Ram</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('pohranapodataka')">HDD i SSD</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('grafickakartica')">Graficke kartice</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('kuciste')">Kucista</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('napojnajedinica')">Napojne jedinice</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" @click="setTypeValue('ventilatorkuler')">Ventilatori i kuleri</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <ul class="row">
       <product-item
         class="col-12 col-sm-8 col-md-6 col-lg-4"
         v-for="prod in productsPopular"
@@ -19,11 +59,9 @@
     <nav>
       <ul class="pagination justify-content-center">
         <li class="page-item" v-if="currentPagePopular > 1">
-          <a class="page-link" @click="previousPopular()" >Previous</a>
+          <a class="page-link" @click="previousPopular('')" >Previous</a>
         </li>
-
         <li class="page-item" v-for="page in maxPagesPopular" :key="page"><a class="page-link" @click="pageByNumberPopular(page)">{{ page }}</a></li>
-
         <li class="page-item" v-if="currentPagePopular < maxPagesPopular">
           <a class="page-link" @click="nextPopular">Next</a>
         </li>
@@ -76,7 +114,8 @@ export default {
       maxPagesPopular: 0,
       productsLatest: [],
       currentPageLatest: 1,
-      maxPagesLatest: 0,
+      maxPagesLatest: 5,
+      type: ""
     };
   },
   methods: {
@@ -90,13 +129,13 @@ export default {
       this.productsPopular = responsePopular.data.results;
       this.productsLatest = responseLatest.data.results;
       this.maxPagesPopular = responsePopular.data.maxPages;
-      this.maxPagesLatest = responseLatest.data.maxPages;
+      // this.maxPagesLatest = responseLatest.data.maxPages;
       console.log(this.productsLatest);
     },
     async nextPopular(){
       this.currentPagePopular++
       const response = await axios.get(
-        "http://localhost:3000/products?sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
+        "http://localhost:3000/products?"+this.type+"&sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
       );
       this.productsPopular = response.data.results;
     },
@@ -110,7 +149,7 @@ export default {
     async previousPopular(){
       this.currentPagePopular--
        const response = await axios.get(
-        "http://localhost:3000/products?sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
+        "http://localhost:3000/products?"+this.type+"&sort=popular&page="+ this.currentPagePopular +"&limit="+ this.limit
       );
       this.productsPopular = response.data.results;
     },
@@ -123,7 +162,7 @@ export default {
     },
     async pageByNumberPopular(number){
       const response = await axios.get(
-        "http://localhost:3000/products?sort=popular&page="+ number +"&limit="+ this.limit
+        "http://localhost:3000/products?"+this.type+"&sort=popular&page="+ number +"&limit="+ this.limit
       );
       this.productsPopular = response.data.results;
       this.currentPagePopular = number
@@ -134,6 +173,19 @@ export default {
       );
       this.productsLatest = response.data.results;
       this.currentPageLatest = number
+    },
+    async setTypeValue(type){
+      if(type==""){
+        this.type = ""
+      }else{
+        this.type = "type=" + type
+      }
+      this.currentPagePopular = 1
+      const responsePopular = await axios.get(
+        "http://localhost:3000/products?"+this.type+"&sort=popular&page=1&limit="+this.limit
+      );
+      this.productsPopular = responsePopular.data.results
+      this.maxPagesPopular = responsePopular.data.maxPages;
     }
   },
   created() {
@@ -158,7 +210,7 @@ export default {
 h1{
   text-align: center;
 }
-.ladingPageTitle{
-  color: rgb(0, 140, 255);
+a{
+  cursor: pointer;
 }
 </style>
