@@ -16,6 +16,8 @@ services:
       - database
     environment:
       - DATABASE_URL=database:27017
+      - SENDGRID_API_KEY=SG.testKey
+      - ADMINISTRATOR_EMAIL=test@test.com
     
   database:
     image: mongo

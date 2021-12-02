@@ -62,7 +62,7 @@ export default {
     },
     sendQuestion(){
         axios
-        .post("http://localhost:3000/questions", {
+        .post("http://api.zavrsnirad.xyz/questions", {
           name: this.name,
           email: this.email,
           question: this.question,

@@ -45,7 +45,7 @@ export default {
     },
     async loadData() {
       const response = await axios.get(
-        "http://localhost:3000/products/" + this.$route.params.prId
+        "http://api.zavrsnirad.xyz/products/" + this.$route.params.prId
       );
       this.products = response.data;
       console.log(this.products);

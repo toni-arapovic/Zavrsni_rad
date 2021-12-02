@@ -47,7 +47,7 @@ export default {
   methods: {
     async loadData() {
       const response = await axios.get(
-        "http://localhost:3000/products?type=" + this.$route.params.prType + "&page=1&limit="+this.limit
+        "http://api.zavrsnirad.xyz/products?type=" + this.$route.params.prType + "&page=1&limit="+this.limit
       );
       this.products = response.data.results;
       this.maxPages = response.data.maxPages;
@@ -56,7 +56,7 @@ export default {
     async next(){
       this.currentPage++
       const response = await axios.get(
-        "http://localhost:3000/products?type=" + this.$route.params.prType + "&page="+ this.currentPage +"&limit="+ this.limit
+        "http://api.zavrsnirad.xyz/products?type=" + this.$route.params.prType + "&page="+ this.currentPage +"&limit="+ this.limit
       );
       this.products = response.data.results;
 
@@ -64,13 +64,13 @@ export default {
     async previous(){
       this.currentPage--
        const response = await axios.get(
-        "http://localhost:3000/products?type=" + this.$route.params.prType + "&page="+ this.currentPage +"&limit="+ this.limit
+        "http://api.zavrsnirad.xyz/products?type=" + this.$route.params.prType + "&page="+ this.currentPage +"&limit="+ this.limit
       );
       this.products = response.data.results;
     },
     async pageByNumber(number){
       const response = await axios.get(
-        "http://localhost:3000/products?type=" + this.$route.params.prType + "&page="+ number +"&limit="+ this.limit
+        "http://api.zavrsnirad.xyz/products?type=" + this.$route.params.prType + "&page="+ number +"&limit="+ this.limit
       );
       this.products = response.data.results;
       this.currentPage = number
