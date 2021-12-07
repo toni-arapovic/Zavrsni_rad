@@ -26,7 +26,7 @@
           <td class="hidden-xs text-center">
             <strong>Ukupno: {{ cartTotal }} KM</strong>
           </td>
-          <td>
+          <td v-if="cartTotal">
             <router-link to="/naruci" class="btn btn-primary" type="button"
               >Naruci</router-link
             >

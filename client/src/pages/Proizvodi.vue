@@ -81,3 +81,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+a{
+  cursor: pointer;
+}
+</style>

@@ -40,6 +40,7 @@
 
 <script>
 import axios from "axios";
+import router from "../router.js"
 export default {
   data() {
     return {
@@ -60,22 +61,22 @@ export default {
         this.errors.push("Košarica je prazna")
       }
       if(this.name == ""){
-        this.errors.push("Uneiste ime i prezime")
+        this.errors.push("Unesite ime i prezime")
       }
       if(!this.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
-        this.errors.push("Uneiste email")
+        this.errors.push("Unesite email")
       }
       if(this.adress == ""){
-        this.errors.push("Uneiste adresu")
+        this.errors.push("Unesite adresu")
       }
       if(this.city == ""){
-        this.errors.push("Uneiste grad")
+        this.errors.push("Unesite grad")
       }
       if(!this.postalCode.match(/^\d{5}$/)){
-        this.errors.push("Uneiste poštanski broj")
+        this.errors.push("Unesite poštanski broj")
       }
       if(!this.phoneNumber.replace(/\s+/g, '').match(/^\d{9}$/)){
-        this.errors.push("Uneiste broj telefona")
+        this.errors.push("Unesite broj telefona")
       }
 
       if(this.errors.length == 0){
@@ -103,6 +104,7 @@ export default {
         this.isSuccessful = true;
         setTimeout(() => (this.isSuccessful = false), 2000);
         this.$store.dispatch("cart/clearCart")
+        setTimeout(() => (router.push('/')), 2000);
     },
   },
 };

@@ -29,6 +29,7 @@
 
 <script>
 import axios from 'axios'
+import router from "../router.js";
 export default {
   data() {
     return {
@@ -43,17 +44,17 @@ export default {
     validate() {
       this.errors = [];
       if (this.name == "") {
-        this.errors.push("Uneiste ime i prezime");
+        this.errors.push("Unesite ime i prezime");
       }
       if (
         !this.email.match(
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
       ) {
-        this.errors.push("Uneiste email");
+        this.errors.push("Unesite email");
       }
       if (this.question == "") {
-        this.errors.push("Uneiste pitanje");
+        this.errors.push("Unesite pitanje");
       }
 
       if (this.errors.length == 0) {
@@ -75,6 +76,8 @@ export default {
         });
         this.isSuccessful = true;
         setTimeout(() => (this.isSuccessful = false), 2000);
+        setTimeout(() => (router.push('/')), 2000);
+        
     }
   },
 };
