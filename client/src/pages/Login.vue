@@ -47,7 +47,9 @@ export default {
         this.message = response.data.message
         this.userData = response.data
         this.errors = []
+        
         if(this.message ==  undefined){
+          this.$store.dispatch("login/logIn", this.userData)
           this.isSuccessful = true;
           setTimeout(() => (this.isSuccessful = false), 2000);
           setTimeout(() => (router.push('/')), 2000);
@@ -56,7 +58,7 @@ export default {
         }else if(this.message == "User does not exist"){
           this.errors.push("Pogrešan username ili password")
         }
-        this.$store.dispatch("login/logIn", this.userData)
+        
       }
     }
 }
