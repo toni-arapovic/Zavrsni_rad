@@ -1,4 +1,4 @@
-//require('dotenv').config()
+require('dotenv').config()
 const express = require("express");
 const router = express.Router();
 const Order = require('../models/orders')
@@ -15,16 +15,26 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/user", async (req, res) => {
+    try{
+        const orders = await Order.find({username: req.query.username})
+        res.json(orders)
+    }catch (err){
+        res.status(500).json({ message: err.message})
+    }
+});
 
 router.post("/", async (req, res) => {
     const order = new Order({
-        products: JSON.stringify(req.body.products),
+        products: req.body.products,
         name: req.body.name,
         email: req.body.email,
         adress: req.body.adress,
         city: req.body.city,
         postalCode: req.body.postalCode,
-        phoneNumber: req.body.phoneNumber
+        phoneNumber: req.body.phoneNumber,
+        username: req.body.username,
+        totalSum: req.body.totalSum,
     })
 
     var templateData = []

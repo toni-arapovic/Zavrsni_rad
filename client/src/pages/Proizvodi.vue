@@ -51,7 +51,7 @@ export default {
       );
       this.products = response.data.results;
       this.maxPages = response.data.maxPages;
-      console.log(this.products);
+      //console.log(this.products);
     },
     async next(){
       this.currentPage++

@@ -129,7 +129,6 @@ export default {
       this.productsPopular = responsePopular.data.results;
       this.productsLatest = responseLatest.data.results;
       this.maxPagesPopular = responsePopular.data.maxPages;
-      // this.maxPagesLatest = responseLatest.data.maxPages;
       console.log(this.productsLatest);
     },
     async nextPopular(){

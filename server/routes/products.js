@@ -16,11 +16,42 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/search", async (req, res) => {
+  const searchValue = req.query.searchValue
+  const type = req.query.type
+  const minPrice = req.query.minPrice
+  const maxPrice = req.query.maxPrice
+  var query = {}
+
+  if(searchValue != undefined){
+    query.$text = {$search: searchValue}
+  }
+  if(type != undefined){
+    query.type = type
+  }
+  if(minPrice != undefined && maxPrice != undefined){
+    query.price = {$gt: minPrice, $lt: maxPrice }
+  }
+  if(minPrice >0 && maxPrice == undefined){
+    query.price = {$gt: minPrice}
+  }
+  if(minPrice == undefined && maxPrice>0){
+    query.price = {$lt: maxPrice}
+  }
+  console.log(query)
+
+  try{
+      const products = await Product.find(query)
+      res.json(products)
+  }catch (err){
+      res.status(500).json({ message: err.message})
+  }
+});
+
 router.get("/:id", getProduct, (req, res) => {
   res.json(res.product);
 });
 
-//Dodavanje (ne koristi se)
 router.post("/", async (req, res) => {
   const product = new Product({
     type: req.body.type,
@@ -39,7 +70,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//Brisanje (ne koristi se)
+
 router.delete("/:id", getProduct, async (req, res) => {
   try {
     await res.product.remove();

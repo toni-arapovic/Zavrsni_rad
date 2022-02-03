@@ -1,4 +1,7 @@
 <template>
+  <div v-if="isSuccessful" class="alert alert-success" role="alert">
+      Narudžba uspješna!
+  </div>
   <div class="container">
     <table id="cart" class="table table-hover table-condensed">
       <thead>
@@ -27,8 +30,8 @@
             <strong>Ukupno: {{ cartTotal }} KM</strong>
           </td>
           <td v-if="cartTotal">
-            <router-link to="/naruci" class="btn btn-primary" type="button"
-              >Naruci</router-link
+            <button @click="order" class="btn btn-primary"
+              >Naruci</button
             >
           </td>
         </tr>
@@ -39,10 +42,49 @@
 
 <script>
 import CartItem from "../components/cart/CartItem.vue";
-
+import axios from "axios";
+import router from "../router.js"
 export default {
   components: {
     CartItem,
+  },
+  data(){
+    return{
+      isSuccessful: false
+    }
+  },
+  methods:{
+    order(){
+      if(this.$store.getters['login/isLogedIn']){
+        this.completeOrder()
+      }else{
+        router.push('/naruci')
+      }
+    },
+    completeOrder() {
+      axios
+        .post("https://api.zavrsnirad.xyz/orders", {
+          products: this.$store.getters["cart/products"],
+          name: this.$store.getters['login/user'].name,
+          email: this.$store.getters['login/user'].email,
+          adress: this.$store.getters['login/user'].adress,
+          city: this.$store.getters['login/user'].city,
+          postalCode: this.$store.getters['login/user'].postalCode,
+          phoneNumber: this.$store.getters['login/user'].phoneNumber,
+          username: this.$store.getters['login/user'].username,
+          totalSum: this.$store.getters["cart/totalSum"]
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+        this.isSuccessful = true;
+        setTimeout(() => (this.isSuccessful = false), 2000);
+        this.$store.dispatch("cart/clearCart")
+        setTimeout(() => (router.push('/')), 2000);
+    },
   },
   computed: {
     cartTotal() {

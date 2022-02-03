@@ -1,7 +1,7 @@
 <template>
   <section class="">
     <div v-if="isSuccessful" class="alert alert-success" role="alert">
-      Narudžba uspješna!
+      Registracija uspješna!
     </div>
     <div v-if="errors.length" class="alert alert-danger" role="alert">
       <ul>
@@ -10,12 +10,20 @@
     </div>
     <form v-on:submit.prevent class="container">
       <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" v-model="email" type="text" required/>
+      </div>
+      <div class="form-group">
         <label>Ime i prezime</label>
         <input class="form-control" v-model="name" type="text" required/>
       </div>
       <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" v-model="email" type="text" required/>
+        <label>Username</label>
+        <input class="form-control" v-model="username" type="text" required/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" v-model="password" type="password" required/>
       </div>
       <div class="form-group">
         <label>Adresa</label>
@@ -33,38 +41,45 @@
         <label>Broj telefona</label>
         <input class="form-control" v-model="phoneNumber" type="text" required/>
       </div>
-    <button @click="validate" class="btn btn-primary mt-2">Završi narudžbu</button>
+    <button @click="validate" class="btn btn-primary mt-2">Registriraj se</button>
     </form>
   </section>
 </template>
+
 
 <script>
 import axios from "axios";
 import router from "../router.js"
 export default {
-  data() {
-    return {
-      name: "",
-      email: "",
-      adress: "",
-      city: "",
-      postalCode: "",
-      phoneNumber: "",
-      isSuccessful: false,
-      errors: []
-    };
-  },
-  methods: {
-    validate(){
+    data(){
+        return{
+            email: "",
+            name: "",
+            username: "",
+            password: "",
+            adress: "",
+            city: "",
+            postalCode: "",
+            phoneNumber: "",
+            isSuccessful: false,
+            errors: [],
+            message: []
+        }
+    },
+    methods:{
+        validate(){
       this.errors = []
-      if(this.$store.getters["cart/products"].length == 0){
-        this.errors.push("Košarica je prazna")
+      if(!this.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
+        this.errors.push("Unesite email")
       }
       if(this.name == ""){
         this.errors.push("Unesite ime i prezime")
       }
-      if(!this.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
-        this.errors.push("Unesite email")
+      if(this.username == ""){
+          this.errors.push("Unesite username")
+      }
+      if(this.password.length < 8){
+          this.errors.push("Password mora biti duži od 8 znakova")
       }
       if(this.adress == ""){
         this.errors.push("Unesite adresu")
@@ -80,39 +95,38 @@ export default {
       }
 
       if(this.errors.length == 0){
-        this.completeOrder();
+        this.completeRegistration();
       }
     },
-    completeOrder() {
-      var products = this.$store.getters["cart/products"]
-      axios
-        .post("https://api.zavrsnirad.xyz/orders", {
-          products: products,
+    async completeRegistration() {
+        const response = await axios
+        .post("https://api.zavrsnirad.xyz/login/register", {
+          username: this.username,
+          password: this.password,
           name: this.name,
           email: this.email,
           adress: this.adress,
           city: this.city,
           postalCode: this.postalCode,
           phoneNumber: this.phoneNumber,
-          totalSum: this.$store.getters["cart/totalSum"]
         })
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-        this.isSuccessful = true;
-        setTimeout(() => (this.isSuccessful = false), 2000);
-        this.$store.dispatch("cart/clearCart")
-        setTimeout(() => (router.push('/')), 2000);
+        this.message = response.data.message
+        this.errors = []
+        if(this.message ==  "Registration successful"){
+          this.isSuccessful = true;
+          setTimeout(() => (this.isSuccessful = false), 2000);
+          setTimeout(() => (router.push('/')), 2000);
+        }else if (this.message ==  "Username already exists"){
+          this.errors.push("Korisničko ime već postoji")
+        }
     },
-  },
-};
+
+    }
+}
 </script>
+
 <style scoped>
-section{
-  margin: 1rem auto 1rem auto;
-  width: 60%;
+.btn{
+    margin: 2px;
 }
 </style>
