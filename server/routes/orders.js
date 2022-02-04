@@ -51,6 +51,8 @@ router.post("/", async (req, res) => {
         dynamicTemplateData: {
             name: req.body.name,
             items: templateData,
+            date: Date.now,
+            price: req.body.totalSum,
         }
       }
     

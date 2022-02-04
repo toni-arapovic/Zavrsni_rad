@@ -1,7 +1,7 @@
 const express = require("express");
 const login = require("../models/login");
 const router = express.Router();
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const Login = require('../models/login')
 const Order = require('../models/orders')
 
