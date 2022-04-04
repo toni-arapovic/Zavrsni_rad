@@ -1,3 +1,1 @@
-docker-compose build
-
-docker-compose up
+Live Demo: https://zavrsnirad.xyz/
